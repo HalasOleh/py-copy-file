@@ -5,13 +5,15 @@ def copy_file(command: str) -> None:
     if len(command_parts) != 3 or command_parts[0] != "cp":
         return
 
-    destination_file = command_parts[1]
-    new_file = command_parts[2]
+    source_file = command_parts[1]
+    destination_file = command_parts[2]
+
+    if source_file == destination_file:
+        return
 
     try:
-        with (open(destination_file, "r") as file_in,
-              open(new_file, "w") as file_out):
-            data = file_in.read()
-            file_out.write(data)
+        with (open(source_file, "r") as file_in,
+              open(destination_file, "w") as file_out):
+            file_out.write(file_in.read())
     except FileNotFoundError:
         return
