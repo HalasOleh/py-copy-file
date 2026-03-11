@@ -1,20 +1,16 @@
 def copy_file(command: str) -> None:
 
-    try:
-        com = command.split()
-        cp_com = com[0]
-        fil = com[1]
-        new_file = com[2]
-    except IndexError:
+    command_parts = command.split()
+
+    if len(command_parts) != 3 or command_parts[0] != "cp":
         return
 
-    if fil == new_file:
-        return
-    if cp_com != "cp":
-        return
+    destination_file = command_parts[1]
+    new_file = command_parts[2]
 
     try:
-        with open(fil, "r") as file_in, open(new_file, "w") as file_out:
+        with (open(destination_file, "r") as file_in,
+              open(new_file, "w") as file_out):
             data = file_in.read()
             file_out.write(data)
     except FileNotFoundError:
